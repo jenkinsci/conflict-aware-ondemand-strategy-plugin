@@ -11,7 +11,7 @@ buildPlugin(useContainerAgent: true, configurations: [
   // Test the bleeding edge of the compatibility spectrum (i.e., the latest supported Java runtime).
   // see also https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/
   // NOTE: 2.475+ introduced other breaking changes to ecosystem
-  //[ platform: 'linux', jdk: '17', jenkins: '2.479.1' ],
+  [ platform: 'linux', jdk: '17', jenkins: '2.479.1' ],
 
   // NOTE: LTS https://www.jenkins.io/changelog-stable/#v2.462.3
   // is the last LTS release to support Java 11
