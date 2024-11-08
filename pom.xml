@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
         <version>4.88</version>
         <relativePath />
     </parent>
+
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>conflict-aware-ondemand-strategy</artifactId>
     <version>${revision}.${changelist}</version>
     <packaging>hpi</packaging>
+
     <properties>
         <revision>2</revision>
         <changelist>999999-SNAPSHOT</changelist>
@@ -20,8 +23,14 @@
         <spotbugs.effort>Max</spotbugs.effort>
         <spotbugs.threshold>Low</spotbugs.threshold>
     </properties>
+
     <name>Conflict Aware On Demand Retention Strategy Plugin</name>
+    <description>Extension of the standard "On Demand" launch and
+        retention strategy for Jenkins build agents such as the
+        SSH Build Agents, limiting the resource stress on a single
+        system hosting several such agents.</description>
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+    <inceptionYear>2021</inceptionYear>
 
     <dependencyManagement>
         <dependencies>
