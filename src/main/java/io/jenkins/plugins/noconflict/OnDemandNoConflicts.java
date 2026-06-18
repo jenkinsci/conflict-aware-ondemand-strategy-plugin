@@ -14,6 +14,7 @@ import hudson.slaves.SlaveComputer;
 import hudson.util.FormValidation;
 import java.text.MessageFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,6 +26,8 @@ import java.util.regex.Pattern;
 import jenkins.model.Jenkins;
 //import net.jcip.annotations.GuardedBy;
 import org.jenkinsci.Symbol;
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
@@ -96,6 +99,17 @@ public class OnDemandNoConflicts extends RetentionStrategy<SlaveComputer> {
     @DataBoundSetter
     public void setConflictsWith(String value) {
         this.conflictsWith = value.trim();
+    }
+
+    /**
+     * Gets the formatted current time stamp.
+     *
+     * @return the formatted current time stamp.
+     */
+    // From https://github.com/jenkinsci/ssh-agents-plugin/blob/main/src/main/java/hudson/plugins/sshslaves/SSHLauncher.java
+    @Restricted(NoExternalUse.class)
+    public static String getTimestamp() {
+        return String.format("[%1$tD %1$tT]", new Date());
     }
 
     // GuardedBy was deprecated from Jenkins along with JSR-305 annotations
@@ -179,15 +193,16 @@ public class OnDemandNoConflicts extends RetentionStrategy<SlaveComputer> {
 
             if (needComputer) {
                 // we've been in demand for long enough
+                String ts = getTimestamp();
                 if (!hasConflict.isEmpty()) {
                     /* Would be nice to see this in the agent log UI as well */
-                    String msg = MessageFormat.format("Would launch computer [{0}] as it has been in demand for {1}, but it conflicts by regex ~/{2}/ with already active computer(s): {3}",
-                            new Object[]{c.getName(), Util.getTimeSpanString(demandMilliseconds), conflictsWith, hasConflict.toString()});
+                    String msg = MessageFormat.format("{0} Would launch computer [{1}] as it has been in demand for {2}, but it conflicts by regex ~/{3}/ with already active computer(s): {4}",
+                            new Object[]{ts, c.getName(), Util.getTimeSpanString(demandMilliseconds), conflictsWith, hasConflict.toString()});
                     c.getListener().getLogger().println(msg);
                     logger.log(Level.WARNING, "{0}", msg);
                 } else {
-                    String msg = MessageFormat.format("Launching computer [{0}] as it has been in demand for {1}{2}",
-                            new Object[]{c.getName(), Util.getTimeSpanString(demandMilliseconds),
+                    String msg = MessageFormat.format("{0} Launching computer [{1}] as it has been in demand for {2}{3}",
+                            new Object[]{ts, c.getName(), Util.getTimeSpanString(demandMilliseconds),
                                     (conflictsWithPattern == null ? "" : " and has no conflicting computers matched by regex ~/" + conflictsWith + "/")});
                     logger.log(Level.INFO, "{0}", msg);
                     c.connect(false);
@@ -198,8 +213,9 @@ public class OnDemandNoConflicts extends RetentionStrategy<SlaveComputer> {
             final long idleMilliseconds = System.currentTimeMillis() - c.getIdleStartMilliseconds();
             if (idleMilliseconds > TimeUnit.MINUTES.toMillis(idleDelay)) {
                 // we've been idle for long enough
-                String msg = MessageFormat.format("Disconnecting computer [{0}] as it has been idle for {1}",
-                        new Object[]{c.getName(), Util.getTimeSpanString(idleMilliseconds)});
+                String ts = getTimestamp();
+                String msg = MessageFormat.format("{0} Disconnecting computer [{1}] as it has been idle for {2}",
+                        new Object[]{ts, c.getName(), Util.getTimeSpanString(idleMilliseconds)});
                 logger.log(Level.INFO, "{0}", msg);
                 c.getListener().getLogger().println(msg);
                 c.disconnect(new OfflineCause.IdleOfflineCause());
