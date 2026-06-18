@@ -3,7 +3,7 @@
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/conflict-aware-ondemand-strategy.svg)](https://plugins.jenkins.io/conflict-aware-ondemand-strategy)
 [![GitHub release](https://img.shields.io/github/release/jenkinsci/conflict-aware-ondemand-strategy-plugin.svg?label=release)](https://github.com/jenkinsci/conflict-aware-ondemand-strategy-plugin/releases/latest)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/conflict-aware-ondemand-strategy.svg?color=blue)](https://plugins.jenkins.io/conflict-aware-ondemand-strategy)
-[![Build Status](https://ci.jenkins.io/job/Plugins/job/conflict-aware-ondemand-strategy-plugin/job/main/badge/icon)](https://ci.jenkins.io/job/Plugins/job/conflict-aware-ondemand-strategy-plugin/job/main/)
+[![Build Status](https://ci.jenkins.io/buildStatus/icon?job=Plugins%2Fconflict-aware-ondemand-strategy-plugin%2Fmain)](https://ci.jenkins.io/job/Plugins/job/conflict-aware-ondemand-strategy-plugin/job/main/)
 [![GitHub license](https://img.shields.io/github/license/jenkinsci/conflict-aware-ondemand-strategy-plugin.svg)](https://github.com/jenkinsci/conflict-aware-ondemand-strategy-plugin/blob/main/LICENSE.txt)
 [![Maintenance](https://img.shields.io/maintenance/yes/2026.svg)](https://github.com/jenkinsci/conflict-aware-ondemand-strategy-plugin)
 
