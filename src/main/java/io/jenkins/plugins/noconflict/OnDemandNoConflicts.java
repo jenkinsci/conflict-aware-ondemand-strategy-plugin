@@ -31,6 +31,7 @@ import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 // Largely based on hudson.slaves.RetentionStrategy.Demand in Jenkins core and https://github.com/jenkinsci/jenkins/pull/5764
 public class OnDemandNoConflicts extends RetentionStrategy<SlaveComputer> {
@@ -240,8 +241,10 @@ public class OnDemandNoConflicts extends RetentionStrategy<SlaveComputer> {
          * @return {@link FormValidation#ok} if this item can be populated as specified, otherwise
          * {@link FormValidation#error} with a message explaining the problem.
          */
+        @POST
         public @NonNull
         FormValidation doCheckConflictsWith(@QueryParameter String value) {
+            Jenkins.get().checkPermission(Jenkins.ADMINISTER);
             try {
                 Pattern pattern = null;
                 if (value != null && !value.trim().equals("")) {
